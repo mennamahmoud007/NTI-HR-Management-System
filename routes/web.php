@@ -23,14 +23,20 @@ use App\Http\Controllers\HREmployeeController;
 Route::get('/employees', [HREmployeeController::class, 'index'])->name('employees.index');
 
 Route::middleware(['auth', 'role:employee'])->group(function () {
-    Route::get('/employee/salary', [SalaryController::class, 'index'])->name('employee.salary');
+    Route::get('/employee/salary', [SalaryController::class, 'mySalary'])->name('employee.salary');
     Route::get('/employee/attendance', [AttendanceController::class, 'index'])->name('employee.attendance');
     Route::get('/employee/leave-requests', [LeaveRequestController::class, 'index'])->name('employee.leaves');
     Route::post('/employee/leave-requests', [LeaveRequestController::class, 'store'])->name('employee.leaves.store');
 });
-Route::post('/employees/store', [HREmployeeController::class, 'store'])->name('employees.store');
-Route::put('/employees/{id}/update', [HREmployeeController::class, 'update'])->name('employees.update');
-Route::delete('/employees/{id}/delete', [HREmployeeController::class, 'destroy'])->name('employees.destroy');
+Route::get('/employees/{employee}', [EmployeeController::class, 'show'])->name('employees.show');
+// مسار الحذف الصحيح
+Route::delete('/employees/{id}', [HREmployeeController::class, 'destroy'])->name('employees.destroy');
+
+// مسار التعديل
+Route::put('/employees/{id}', [HREmployeeController::class, 'update'])->name('employees.update');
+
+// مسار الإضافة
+Route::post('/employees', [HREmployeeController::class, 'store'])->name('employees.store');
 // Dashboard
 Route::get('/hr/dashboard', [HrDashboardController::class, 'index'])->middleware('auth')->name('hr.dashboard');
 

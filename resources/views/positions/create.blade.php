@@ -1,130 +1,129 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Add Position</title>
+@extends('layouts.app')
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+@section('content')
 
-    <style>
-        body {
-            background-color: #0f172a;
-            color: white;
-        }
+<style>
+    .create-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 40px);
+        padding: 30px;
+    }
 
-        .card {
-            background-color: #1e293b;
-            border-radius: 15px;
-            padding: 30px;
-        }
+    .create-card {
+        background-color: #1e293b;
+        border-radius: 15px;
+        padding: 30px;
+        width: 100%;
+        max-width: 650px;
+    }
 
-        .form-label {
-            color: white;
-        }
+    .create-card label {
+        color: white;
+        margin-bottom: 8px;
+    }
 
-        .btn-purple {
-            background: linear-gradient(to right, #7c3aed, #9333ea);
-            color: white;
-            border: none;
-        }
+    .create-card .form-control,
+    .create-card .form-select {
+        background-color: #334155;
+        color: white;
+        border: 1px solid #475569;
+    }
 
-        .btn-purple:hover {
-            opacity: 0.9;
-            color: white;
-        }
+    .create-card .form-control::placeholder {
+        color: #cbd5e1;
+    }
 
-        .form-control {
-    background-color: #334155;
-    color: white;
-    border: 1px solid #475569;
-}
+    .create-card .form-select option {
+        background-color: #334155;
+        color: white;
+    }
 
-.form-select {
-    background-color: #334155;
-    color: white;
-    border: 1px solid #475569;
-    cursor: pointer;
-}
+    .btn-purple {
+        background: linear-gradient(to right, #7c3aed, #9333ea);
+        color: white;
+        border: none;
+    }
 
-        .form-control::placeholder {
-            color: #cbd5e1;
-        }
+    .btn-purple:hover {
+        opacity: 0.9;
+        color: white;
+    }
+</style>
 
-        .form-select option {
-            background-color: #334155;
-            color: white;
-        }
-    </style>
-</head>
+<div class="create-container">
 
-<body class="d-flex justify-content-center align-items-center vh-100">
+    <div class="create-card">
 
-<div class="card col-md-6">
+        <h3 class="mb-4 text-white">Add Position</h3>
 
-    <h3 class="mb-4">Add Position</h3>
+        <form action="{{ route('positions.store') }}" method="POST">
+            @csrf
 
-    <form action="{{ route('positions.store') }}" method="POST">
-        @csrf
+            <!-- Position Title -->
+            <div class="mb-3">
+                <label>Position Title</label>
 
-        <!-- Position Title -->
-        <div class="mb-3">
-            <label class="form-label">Position Title</label>
+                <input
+                    type="text"
+                    name="name"
+                    class="form-control"
+                    placeholder="e.g. Software Engineer"
+                    value="{{ old('name') }}"
+                >
 
-            <input
-                type="text"
-                name="name"
-                class="form-control"
-                placeholder="e.g. Software Engineer"
-                value="{{ old('name') }}"
-            >
+                @error('name')
+                    <div class="text-danger mt-1">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
 
-            @error('name')
-                <div class="text-danger mt-1">{{ $message }}</div>
-            @enderror
-        </div>
+            <!-- Department -->
+            <div class="mb-3">
+                <label>Department</label>
 
-        <!-- Department -->
-        <div class="mb-3">
-            <label class="form-label">Department</label>
+                <select name="department_id" class="form-select">
 
-            <select name="department_id" class="form-select">
+                    <option value="">Select Department</option>
 
-                <option value="">Select Department</option>
+                    @foreach($departments as $department)
+                        <option
+                            value="{{ $department->id }}"
+                            {{ old('department_id') == $department->id ? 'selected' : '' }}
+                        >
+                            {{ $department->name }}
+                        </option>
+                    @endforeach
 
-                @foreach($departments as $department)
+                </select>
 
-                    <option
-                        value="{{ $department->id }}"
-                        {{ old('department_id') == $department->id ? 'selected' : '' }}
-                    >
-                        {{ $department->name }}
-                    </option>
+                @error('department_id')
+                    <div class="text-danger mt-1">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
 
-                @endforeach
+            <!-- Buttons -->
+            <div class="d-flex justify-content-end">
 
-            </select>
+                <a href="{{ route('positions.index') }}"
+                   class="btn btn-secondary me-2">
+                    Cancel
+                </a>
 
-            @error('department_id')
-                <div class="text-danger mt-1">{{ $message }}</div>
-            @enderror
-        </div>
+                <button type="submit" class="btn btn-purple">
+                    Add Position
+                </button>
 
-        <!-- Buttons -->
-        <div class="d-flex justify-content-end">
+            </div>
 
-            <a href="{{ route('positions.index') }}"
-               class="btn btn-secondary me-2">
-                Cancel
-            </a>
+        </form>
 
-            <button type="submit" class="btn btn-purple">
-                Add Position
-            </button>
-
-        </div>
-
-    </form>
+    </div>
 
 </div>
 
-</body>
-</html>
+@endsection

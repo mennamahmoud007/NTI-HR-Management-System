@@ -1,104 +1,129 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Add Department</title>
+@extends('layouts.app')
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+@section('content')
 
-    <style>
-        body {
-            background-color: #0f172a;
-            color: white;
-        }
+<style>
+    .create-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 40px);
+        padding: 30px;
+    }
 
-        .card {
-            background-color: #1e293b;
-            border-radius: 15px;
-            padding: 30px;
-        }
+    .create-card {
+        background-color: #1e293b;
+        border-radius: 15px;
+        padding: 30px;
+        width: 100%;
+        max-width: 650px;
+    }
 
-        .btn-purple {
-            background: linear-gradient(to right, #7c3aed, #9333ea);
-            color: white;
-            border: none;
-        }
+    .create-card label {
+        color: white;
+        margin-bottom: 8px;
+    }
 
-        .btn-purple:hover {
-            opacity: 0.9;
-        }
+    .create-card .form-control,
+    .create-card .form-select {
+        background-color: #334155;
+        color: white;
+        border: 1px solid #475569;
+    }
 
-        label {
-            margin-bottom: 8px;
-        }
-    </style>
-</head>
+    .create-card .form-control::placeholder {
+        color: #cbd5e1;
+    }
 
-<body class="d-flex justify-content-center align-items-center vh-100">
+    .create-card .form-select option {
+        background-color: #334155;
+        color: white;
+    }
 
-<div class="card col-md-6">
+    .btn-purple {
+        background: linear-gradient(to right, #7c3aed, #9333ea);
+        color: white;
+        border: none;
+    }
 
-    <h3 class="mb-4 text-white">Add Department</h3>
+    .btn-purple:hover {
+        opacity: 0.9;
+        color: white;
+    }
+</style>
 
-    <form action="{{ route('departments.store') }}" method="POST">
-        @csrf
+<div class="create-container">
 
-        <!-- Department Name -->
-        <div class="mb-3">
-            <label>Department Name</label>
+    <div class="create-card">
 
-            <input
-                type="text"
-                name="name"
-                class="form-control"
-                placeholder="e.g. Product"
-                value="{{ old('name') }}"
-            >
+        <h3 class="mb-4 text-white">Add Department</h3>
 
-            @error('name')
-                <div class="text-danger mt-1">
-                    {{ $message }}
-                </div>
-            @enderror
-        </div>
+        <form action="{{ route('departments.store') }}" method="POST">
+            @csrf
 
-        <!-- Manager -->
-        <div class="mb-3">
-            <label>Manager</label>
+            <!-- Department Name -->
+            <div class="mb-3">
+                <label>Department Name</label>
 
-            <select name="manager_id" class="form-select">
-                <option value="">Select Manager</option>
+                <input
+                    type="text"
+                    name="name"
+                    class="form-control"
+                    placeholder="e.g. Product"
+                    value="{{ old('name') }}"
+                >
 
-                @foreach($managers as $manager)
-                    <option
-                        value="{{ $manager->id }}"
-                        {{ old('manager_id') == $manager->id ? 'selected' : '' }}
-                    >
-                        {{ $manager->user->name }}
-                    </option>
-                @endforeach
-            </select>
+                @error('name')
+                    <div class="text-danger mt-1">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
 
-            @error('manager_id')
-                <div class="text-danger mt-1">
-                    {{ $message }}
-                </div>
-            @enderror
-        </div>
+            <!-- Manager -->
+            <div class="mb-3">
+                <label>Manager</label>
 
-        <!-- Buttons -->
-        <div class="d-flex justify-content-end">
-            <a href="{{ route('departments.index') }}" class="btn btn-secondary me-2">
-                Cancel
-            </a>
+                <select name="manager_id" class="form-select">
 
-            <button type="submit" class="btn btn-purple">
-                Add Department
-            </button>
-        </div>
+                    <option value="">Select Manager</option>
 
-    </form>
+                    @foreach($managers as $manager)
+                        <option
+                            value="{{ $manager->id }}"
+                            {{ old('manager_id') == $manager->id ? 'selected' : '' }}
+                        >
+                            {{ $manager->user->name }}
+                        </option>
+                    @endforeach
+
+                </select>
+
+                @error('manager_id')
+                    <div class="text-danger mt-1">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-flex justify-content-end">
+
+                <a href="{{ route('departments.index') }}"
+                   class="btn btn-secondary me-2">
+                    Cancel
+                </a>
+
+                <button type="submit" class="btn btn-purple">
+                    Add Department
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
 
 </div>
 
-</body>
-</html>
+@endsection

@@ -38,35 +38,6 @@
             <i class="fa-solid fa-briefcase"></i> Positions
         </a>
 
-        <!-- Salaries -->
-        <a href="{{ Route::has('salaries.index') ? route('salaries.index') : (Route::has('hr.salaries') ? route('hr.salaries') : '#') }}" 
-           class="nav-link {{ request()->routeIs('*salar*') ? 'active' : '' }}">
-            <i class="fa-solid fa-dollar-sign"></i> Salaries
-        </a>
-
-        <!-- Attendance -->
-        <a href="{{ Route::has('attendance.index') ? route('attendance.index') : (Route::has('hr.attendance') ? route('hr.attendance') : '#') }}" 
-           class="nav-link {{ request()->routeIs('*attendance*') ? 'active' : '' }}">
-            <i class="fa-regular fa-clock"></i> Attendance
-        </a>
-
-        <!-- Leave Requests -->
-        <a href="{{ Route::has('leave-requests.index') ? route('leave-requests.index') : (Route::has('hr.leave-requests') ? route('hr.leave-requests') : '#') }}" 
-           class="nav-link {{ request()->routeIs('*leave*') ? 'active' : '' }}">
-            <i class="fa-regular fa-envelope"></i> Leave Requests
-        </a>
-
-        <!-- Reports -->
-        <a href="{{ Route::has('reports.index') ? route('reports.index') : (Route::has('hr.reports') ? route('hr.reports') : '#') }}" 
-           class="nav-link {{ request()->routeIs('*report*') ? 'active' : '' }}">
-            <i class="fa-solid fa-chart-simple"></i> Reports
-        </a>
-
-        <!-- Profile -->
-        <a href="{{ Route::has('profile.show') ? route('profile.show') : (Route::has('profile.index') ? route('profile.index') : '#') }}" 
-           class="nav-link {{ request()->routeIs('profile*') ? 'active' : '' }}">
-            <i class="fa-regular fa-circle-user"></i> Profile
-        </a>
     </div>
 
     <!-- User Profile & Logout Section -->

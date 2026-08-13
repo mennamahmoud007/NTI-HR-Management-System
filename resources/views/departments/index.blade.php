@@ -87,6 +87,7 @@
         padding: 6px 12px;
         border-radius: 6px;
         font-size: 0.85rem;
+        font-weight: 500;
     }
 </style>
 

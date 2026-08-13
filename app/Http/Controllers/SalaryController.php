@@ -2,13 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Salary;
 
 class SalaryController extends Controller
 {
-    public function index()
+    public function mySalary()
 {
-    $user = auth()->user();
-    return view('employees.salary', compact('user'));
+    // جلب بيانات الموظف الحالي مع سجل رواتبه
+    $employee = auth()->user()->employee;
+    $salaries = $employee ? $employee->salaries()->latest()->get() : collect();
+
+    return view('employees.salary', compact('employee', 'salaries'));
 }
+    public function index()
+    {
+        $salaries = Salary::with([
+            'employee.user',
+            'employee.department',
+            'employee.position',
+        ])->get();
+
+        return view('salaries.index', compact('salaries'));
+    }
 }
